@@ -6,7 +6,7 @@ The project was inspired by United Arab Emirates vision to the future during the
 
 Talking Cities project was the name adopted from the final coursework of the first Author (dwichandra) for proposing Smart Cities communication framework and protocol.
 
-The loose Arabic translation of the word Talking Cities is Hadeeth Modon, which give birth to the division of the function and element of Talking Cities.
+The loose Arabic translation of the word Talking Cities is Hadeeth Modon, which gives birth to the division of the function and element of Talking Cities.
 
-- Hadeeth, means talking, is the group of function and modules covering the communication and data exchange
-- Modon, means city, is the group of function and modules covering the data storage, security, and access control within each city
+- Hadeeth, means talking, is the group of functions and modules covering the communication and data exchange
+- Modon, means city, is the group of functions and modules covering the data storage, security, and access control within each city
