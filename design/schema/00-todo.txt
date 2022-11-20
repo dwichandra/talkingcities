@@ -1,0 +1,2 @@
+- Create schema for published data: resources, conditions, situations, status
+- Create schme for subscription to city collective data
