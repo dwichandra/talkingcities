@@ -1,0 +1,18 @@
+{
+  "region": " Abu Dhabi",
+  "resource":
+  [
+  {
+    "area": "agriculture",
+    "item": "corn",
+    "quantity": 5,
+    "units": "tons"
+  },
+  {
+    "area": "industry",
+    "item": "box",
+    "quantity": 5000,
+    "units": "pcs"
+  }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "com.talkingcities.schema.resources",
+  "name": "resources",
+  "doc": "Schema reference for resources",
+  "fields": [
+    {
+      "name": "resource_area",
+      "type": "string",
+      "doc": "The resource area are listed in resources-values.json."
+    },
+    {
+      "name": "my_field2",
+      "type": "double",
+      "doc": "The double type is a double precision (64-bit) IEEE 754 floating-point number."
+    },
+    {
+      "name": "my_field3",
+      "type": "string",
+      "doc": "The string is a unicode character sequence."
+    }
+  ]
+}

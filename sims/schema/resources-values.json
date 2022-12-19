@@ -1,0 +1,17 @@
+{
+  # Region consist of 7 Emirates in United Arab Emirates
+  "region": [
+    "Abu Dhabi",
+    "Dubai",
+    "Ras Al khaimah",
+    "Sharjah",
+    "Ajman",
+    "Umm Al Quwain",
+    "Fujairah"
+  ],
+  # Resources start with key 'Resources' with values structure in an array
+  #  for updating the resources
+  "resources":[
+        # Area is the area of
+]
+}
