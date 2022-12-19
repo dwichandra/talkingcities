@@ -1,18 +1,38 @@
 {
   "region": " Abu Dhabi",
-  "resource":
+  "resources":
   [
-  {
-    "area": "agriculture",
-    "item": "corn",
-    "quantity": 5,
-    "units": "tons"
-  },
-  {
-    "area": "industry",
-    "item": "box",
-    "quantity": 5000,
-    "units": "pcs"
-  }
-    ]
+    {
+      "area": "agriculture",
+      "category": "farm",
+      "item": "corn",
+      "quantity": 5,
+      "units": "tons",
+      "status": "produce"
+    },
+    {
+      "area": "industry",
+      "category": "product",
+      "item": "box",
+      "quantity": 5000,
+      "units": "pcs",
+      "status": "produce"
+    },
+    {
+      "area": "agriculture",
+      "category": "raw",
+      "item": "water",
+      "quantity": 10000,
+      "units": "liters",
+      "status": "consume"
+    },
+    {
+      "area": "nature",
+      "category": "raw",
+      "item": "water",
+      "quantity": 20000,
+      "units": "liters",
+      "status": "produce"
+    }
+  ]
 }
