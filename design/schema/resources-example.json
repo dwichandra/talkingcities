@@ -5,12 +5,14 @@
   {
     "area": "agriculture",
     "item": "corn",
-    "quantity": 5
+    "quantity": 5,
+    "units": "tons"
   },
   {
     "area": "industry",
     "item": "box",
-    "quantity": 5000
+    "quantity": 5000,
+    "units": "pcs"
   }
     ]
 }
