@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/presso/impress.js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/presso/impress.js/extras" vcs="Git" />
   </component>
 </project>
