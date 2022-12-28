@@ -5,7 +5,9 @@
 
 import random
 import json
+import logging
 from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
 def RandomizeDataResource():
     # Initialize data generator from various data sources
@@ -22,8 +24,6 @@ def RandomizeDataResource():
         random.seed()
         resource_country_randomizer=len(resource_data_countries["countries"])
         random_idx_country = random.randint(1,resource_country_randomizer)
-        #print("Country Index")
-        #print(random_idx_country-1)
         data_country_name = resource_data_countries["countries"][random_idx_country-1]["country"]
         country_state_randomizer = len(resource_data_countries["countries"][random_idx_country-1]["states"])
         if country_state_randomizer == 0:
@@ -32,18 +32,15 @@ def RandomizeDataResource():
             random_idx_country_state = random.randint(1,country_state_randomizer)
             data_country_state_name = resource_data_countries["countries"][random_idx_country-1]["states"]\
                 [random_idx_country_state-1]
-        #print("Country State Index")
-        #print(random_idx_country_state-1)
-        country_res_data["data"].append({"country":data_country_name,
-                                        "state":data_country_state_name})
 
-    # Randomzing resources from resources-values.json
+    # Randomzing resources data from resources-values.json
     with open('schema/resources-values.json') as resource_values:
         resource_data = json.load(resource_values)
         resource_items = {"resources":[]}
         resources_randomizer=len(resource_data["resources"])
         random.seed()
 
+        # Pick a random number for generating resources data
         random_item = random.randint(1,42)
         for _ in range(random_item):
             random_qty = random.randint(100,10000)
@@ -54,21 +51,8 @@ def RandomizeDataResource():
                 prod_cons = "consume"
 
             random_idx_area = random.randint(1,resources_randomizer)
-            #print(random_idx_area)
             res_area_randomizer = len(resource_data["resources"][random_idx_area-1])
             random_idx_item = random.randint(1,res_area_randomizer)
-            #print(resource_data["resources"][random_idx_item-1][random_idx_area-1])
-            #print(random_idx_item)
-            #print({"area":resource_data["resources"][random_idx_area-1]["area"],
-            #      "prodcons":prod_cons,
-            #      "item":resource_data["resources"][random_idx_area-1]["item"][random_idx_item-1],
-            #      "qty":random_qty,
-            #      "unit":resource_data["resources"][random_idx_area-1]["unit"]})
-            #country_res_data["data"]["resources"].append({"area":resource_data["resources"][random_idx_area-1]["area"],
-            #                                              "prodcons":prod_cons,
-            #                                              "item":resource_data["resources"][random_idx_area-1]["item"][random_idx_item-1],
-            #                                              "qty":random_qty,
-            #                                              "unit":resource_data["resources"][random_idx_area-1]["unit"]})
             data_res_area = resource_data["resources"][random_idx_area-1]["area"]
             data_res_item = resource_data["resources"][random_idx_area-1]["item"][random_idx_item-1]
             data_res_unit = resource_data["resources"][random_idx_area-1]["unit"]
@@ -77,71 +61,45 @@ def RandomizeDataResource():
                                                "item": data_res_item,
                                                "qty":random_qty,
                                                "unit": data_res_unit})
-            #resource_items["resources"].append({"area":resource_data["resources"][random_idx_area-1]["area"],
-            #                      "prodcons":prod_cons,
-            #                      "item":resource_data["resources"][random_idx_area-1]["item"][random_idx_item-1],
-            #                      "qty":random_qty,
-            #                      "unit":resource_data["resources"][random_idx_area-1]["unit"]})
 
-        #print(resource_items)
         print("Country: ", data_country_name)
         print("State: ", data_country_state_name)
         print("Resources: ", random_item)
+        country_res_data["data"].append({"country":data_country_name})
+        country_res_data["data"].append({"state":data_country_state_name})
         country_res_data["data"].append(resource_items)
-        #print(country_res_data)
+
         return(country_res_data)
 
+def ProduceToKafka(bootstrap, data_topic, data):
+    producer = KafkaProducer(value_serializer=lambda v:json.dumps(v).encode('utf-8'),
+                             bootstrap_servers = [bootstrap],
+                             linger_ms=10)
 
-        #print(resource_items)
+    # Asynchronous by default
+    future = producer.send(data_topic, data)
 
-            #print(len(resource_data["resources"]))
+    # Block for 'synchronous' sends
+    try:
+        print("Attempting to send data to Kafka at", bootstrap)
+        record_metadata = future.get(timeout=10)
 
-            #for array_idx in len(resource_data["resources"]):
-                #if kwargs["restype"] == resource_data["resources"][array_idx-1]:
-                #    print(resource_data[resource_data][array_idx])
-            #if kwargs["restype"] in resource_data["resources"]["area"]:
-            #    print("found")
-            #else:
-            #    print("not found")
-            #print(resource_data)
+    except KafkaError:
+        logging.error("We got Kafka Error!")
+        #pass
+    else:
+        # Successful result returns assigned partition and offset
+        print(record_metadata.topic)
+        print(record_metadata.partition)
+        print(record_metadata.offset)
 
-    # open data for resource-values-countries.json for list of countries
-    #with open('schema/resources-values-countries.json') as resource_values_countries:
-    #    resource_data_countries = json.load(resource_values_countries)
-    #    if country in resource_data_countries['countries'][0]:
-    #        print("found")
-    #        country_state = random.choice(resource_data_countries[country])
-    #    else:
-    #        print('not found')
-    #        country_state = "test"
-        #print(resource_data_countries)
-
-    #return resource_data, resource_data_countries
-    #print(country_state)
-    #return country_state
-
-#def ProduceRandomData(dataset):
-#    random_selection = random.choice(dataset)
-#    print(random_selection)
-#    return(random_selection)
-    # List of data set elements
-    #data_set = [1, 2, 3, 4, 5]
-
-    # Select a random element from the data set
-    #random_element = random.choice(data_set)
-    #print(random_element)
-
-def ProduceToKafka(bootstrap,topic,data):
-    producer = KafkaProducer(bootstrap_servers = bootstrap)
-    producer.send(topic,data)
     producer.flush
 
 if __name__ == "__main__":
     print("Preparing Data Generator")
-
-    #print(InitDataResource(country="United Arab Emirates", restype="agriculture"))
-    print(RandomizeDataResource())
-
     bootstrap = "cdp.dct-tech.local:9092"
+    kafka_topic = "resources"
     #ProduceRandomData(InitDataResource("United Arab Emirates"))
-    ProduceToKafka(bootstrap,"resource",RandomizeDataResource())
+    ProduceToKafka(bootstrap,
+                   kafka_topic,
+                   RandomizeDataResource())
