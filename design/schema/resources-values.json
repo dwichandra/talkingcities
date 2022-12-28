@@ -3,7 +3,7 @@
     {
       "area": "agriculture",
       "item": ["corn","rice","wheat","hay"],
-      "unit": "tons"
+      "unit": "kg"
     },
     {
       "area": "industry",

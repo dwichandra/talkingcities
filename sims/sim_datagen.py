@@ -7,22 +7,44 @@ import random
 import json
 from kafka import KafkaProducer
 
-def InitDataResource(**kwargs):
+def RandomizeDataResource():
     # Initialize data generator from various data sources
     # Possible data_sets parameters are:
     # - all - get all resources listed in resources-values*.json
     # TODO: make 'all' parameter to read the resources-values*.json
 
-    print("Initializing data sources")
+    print("Generating random data")
 
-    if "restype" in kwargs:
-        with open('schema/resources-values.json') as resource_values:
-            resource_data = json.load(resource_values)
-            resource_items = []
-            print(resource_data)
-            for resource in resource_data:
-                if resource["area"] == kwargs["restype"]:
-                    resource_items.append(resource["item"])
+    with open('schema/resources-values.json') as resource_values:
+        resource_data = json.load(resource_values)
+        resource_items = []
+        resources_randomizer=len(resource_data["resources"])
+        #print(resources_randomizer)
+        random.seed()
+
+        #for resource in resource_data["resources"]:
+        #    if resource["area"] == kwargs["restype"]:
+        #        resource_items.append(resource["item"])
+        for _ in range(10):
+            random_qty = random.randint(100,10000)
+            rand_prodcons = bool(random.getrandbits(1))
+            if rand_prodcons: prod_cons = "produce"
+            else: prod_cons = "consume"
+
+            random_idx_area = random.randint(1,resources_randomizer)
+            #print(random_idx_area)
+            res_area_randomizer = len(resource_data["resources"][random_idx_area-1])
+            random_idx_item = random.randint(1,res_area_randomizer)
+            #print(resource_data["resources"][random_idx_item-1][random_idx_area-1])
+            #print(random_idx_item)
+            print(resource_data["resources"][random_idx_area-1]["area"],
+                  prod_cons,
+                  resource_data["resources"][random_idx_area-1]["item"][random_idx_item-1],
+                  random_qty,
+                  resource_data["resources"][random_idx_area-1]["unit"])
+
+
+        #print(resource_items)
 
             #print(len(resource_data["resources"]))
 
@@ -50,10 +72,10 @@ def InitDataResource(**kwargs):
     #print(country_state)
     #return country_state
 
-def ProduceRandomData(dataset):
-    random_selection = random.choice(dataset)
-    print(random_selection)
-    return(random_selection)
+#def ProduceRandomData(dataset):
+#    random_selection = random.choice(dataset)
+#    print(random_selection)
+#    return(random_selection)
     # List of data set elements
     #data_set = [1, 2, 3, 4, 5]
 
@@ -70,7 +92,7 @@ if __name__ == "__main__":
     print("Preparing Data Generator")
 
     #print(InitDataResource(country="United Arab Emirates", restype="agriculture"))
-    print(InitDataResource(restype="agriculture"))
+    print(RandomizeDataResource())
 
-    producer = KafkaProducer(bootstrap_servers='cdp.dct-tech.local:9092')
+    #producer = KafkaProducer(bootstrap_servers='cdp.dct-tech.local:9092')
     #ProduceRandomData(InitDataResource("United Arab Emirates"))

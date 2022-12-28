@@ -349,5 +349,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# IntelliJ Idea project
+.idea/
+
 # Python Virtual Environment
 .venv/
