@@ -18,8 +18,14 @@ def InitDataResource(**kwargs):
     if "restype" in kwargs:
         with open('schema/resources-values.json') as resource_values:
             resource_data = json.load(resource_values)
-            print(len(resource_data["resources"]))
-            # TODO: FINISH THIS
+            resource_items = []
+            print(resource_data)
+            for resource in resource_data:
+                if resource["area"] == kwargs["restype"]:
+                    resource_items.append(resource["item"])
+
+            #print(len(resource_data["resources"]))
+
             #for array_idx in len(resource_data["resources"]):
                 #if kwargs["restype"] == resource_data["resources"][array_idx-1]:
                 #    print(resource_data[resource_data][array_idx])
