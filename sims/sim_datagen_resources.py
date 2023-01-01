@@ -1,5 +1,5 @@
 """
-Data Generator for Simulating input or output of a city
+Data Generator for Simulating input or output of a city resources
 # Brief:
 #  - The 'consume' is the resource consumption of a city
 #  - The 'produce' is the resource production from a city
@@ -111,7 +111,7 @@ def produce_to_kafka(bootstrap, data_topic, data):
         producer.flush
 
 if __name__ == "__main__":
-    print("Preparing Data Generator")
+    print("Preparing Data Generator for Resources")
     bootstrap = "cdp.dct-tech.local:9092"
     kafka_topic = "resources"
     # ProduceRandomData(InitDataResource("United Arab Emirates"))
