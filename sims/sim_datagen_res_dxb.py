@@ -21,7 +21,7 @@ def randomize_data_resource():
     print("Generating random data")
 
     # Randomizing country and state/emirate/province from resources-values-countries.json
-    with open('schema/resources-values-countries-uae.json', encoding="utf-8")\
+    with open('schema/resources-values-countries-uae-dxb.json', encoding="utf-8")\
             as resource_values_countries:
         resource_data_countries = json.load(resource_values_countries)
         country_res_data = {"data": []}
