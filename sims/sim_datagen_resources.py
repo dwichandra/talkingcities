@@ -6,6 +6,7 @@ Data Generator for Simulating input or output of a city resources
 """
 
 import random
+import time
 import json
 import logging
 from kafka import KafkaProducer
@@ -25,7 +26,8 @@ def randomize_data_resource():
             as resource_values_countries:
         resource_data_countries = json.load(resource_values_countries)
         country_res_data = {"data": []}
-        random.seed()
+        epoch = int(time.time())
+        random.seed(epoch)
         resource_country_randomizer = len(resource_data_countries["countries"])
         random_idx_country = random.randint(1, resource_country_randomizer)
         data_country_name = resource_data_countries["countries"][random_idx_country - 1]["country"]
@@ -44,7 +46,8 @@ def randomize_data_resource():
         resource_data = json.load(resource_values)
         resource_items = {"resources": []}
         resources_randomizer = len(resource_data["resources"])
-        random.seed()
+        epoch = int(time.time())
+        random.seed(epoch)
 
         # Pick a random number for generating resources data
         #random_item = random.randint(10, 100)
