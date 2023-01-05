@@ -47,7 +47,9 @@ def randomize_data_resource():
         random.seed()
 
         # Pick a random number for generating resources data
-        random_item = random.randint(10, 100)
+        #random_item = random.randint(10, 100)
+        # Generate single entry for resource data
+        random_item = random.randint(1, 1)
         for _ in range(random_item):
             random_qty = random.randint(100, 10000)
             rand_prodcons = bool(random.getrandbits(1))
