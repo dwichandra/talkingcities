@@ -115,7 +115,7 @@ def produce_to_kafka(bootstrap, data_topic, data):
 if __name__ == "__main__":
     print("Preparing Data Generator for Resources")
     bootstrap = "cdp.dct-tech.local:9092"
-    kafka_topic = "resources"
+    kafka_topic = "resource"
     # ProduceRandomData(InitDataResource("United Arab Emirates"))
     produce_to_kafka(bootstrap,
                    kafka_topic,
