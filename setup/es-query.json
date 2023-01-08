@@ -1,0 +1,15 @@
+{
+  "query": {
+    "match": {
+      "data.resource.area": "industry"
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "my-agg-name": {
+      "sum": {
+        "field": "data.resources.qty"
+      }
+    }
+  }
+}

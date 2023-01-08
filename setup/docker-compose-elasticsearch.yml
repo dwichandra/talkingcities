@@ -74,6 +74,7 @@ services:
       - ${ES_PORT}:9200
     environment:
       - node.name=es01
+      - http.publish_host=cdp.dct-tech.local
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es02,es03
@@ -216,6 +217,20 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+
+#  logstash:
+#    depends_on:
+#      es01:
+#        condition: service_healthy
+#      es02:
+#        condition: service_healthy
+#      es03:
+#        condition: service_healthy
+#    image: docker.elastic.co/logstash/logstash:8.5.3
+#    volumes:
+#      - type: bind
+#        source: /Volumes/BlackApple_LD0/github/talkingcities/setup/logstash/config/conf.d/
+#        target: /usr/share/logstash/pipeline/
 
 volumes:
   certs:
